@@ -93,6 +93,7 @@
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
       class="bi bi-arrow-up-short"></i></a>
 
+  <script src="assets/js/custom.js"></script>
   <script type="module">
     // Import the functions you need from the SDKs you need
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-app.js";
@@ -140,12 +141,10 @@
             const htmlStr = `
                 <div class="col-lg-6">
                 <div class="card">
+                  <img src="data:image/jpeg;base64,`+ base64Image +`" class="card-img-top" alt="...">
                   <div class="card-body">
-                    <h5 class="card-title">`+timestamp+`</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
-                      card's content.</p>
-                  </div>
-                  <img src="data:image/jpeg;base64,`+ base64Image +`" class="card-img-bottom" alt="...">
+                    <h5 class="card-title">`+ konversiTimestamp(timestamp)+`</h5>                    
+                  </div>                 
                 </div>
               </div>
             `;
