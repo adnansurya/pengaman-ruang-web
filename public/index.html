@@ -78,36 +78,7 @@
     </div><!-- End Page Title -->
 
     <section class="section">
-      <div id="images-container"></div>
-      <div class="row">
-        <div class="col-lg-6">
-
-          <!-- Card with an image on bottom -->
-          <div class="card">
-            <div class="card-body">
-              <h5 class="card-title">Card with an image on bottom</h5>
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
-                content.</p>
-            </div>
-            <img src="assets/img/card.jpg" class="card-img-bottom" alt="...">
-          </div><!-- End Card with an image on bottom -->
-
-        </div>
-
-        <div class="col-lg-6">
-
-          <!-- Card with an image on bottom -->
-          <div class="card">
-            <div class="card-body">
-              <h5 class="card-title">Card with an image on bottom</h5>
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
-                content.</p>
-            </div>
-            <img src="assets/img/card.jpg" class="card-img-bottom" alt="...">
-          </div><!-- End Card with an image on bottom -->
-
-        </div>
-      </div>
+      <div class="row" id="images-container"></div>
     </section>
 
   </main><!-- End #main -->
@@ -152,6 +123,8 @@
     get(logsRef).then((snapshot) => {
       if (snapshot.exists()) {
         const logsData = snapshot.val();
+
+        // Dapatkan elemen div dengan id="images-container"
         const imagesContainer = document.getElementById('images-container');
 
         // Clear the container before adding new images
@@ -162,25 +135,32 @@
           if (logsData.hasOwnProperty(idKey)) {
             const logEntry = logsData[idKey];
             const base64Image = logEntry.photo;
+            const timestamp = logEntry.timestamp;
 
-            // Create an image element and set its source to the base64 string
-            const imgElement = document.createElement('img');
-            imgElement.src = `data:image/jpeg;base64,${base64Image}`;
-            imgElement.alt = `Image ${idKey}`;
-            imgElement.style.width = '200px'; // Adjust the size as needed
+            const htmlStr = `
+                <div class="col-lg-6">
+                <div class="card">
+                  <div class="card-body">
+                    <h5 class="card-title">`+timestamp+`</h5>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
+                      card's content.</p>
+                  </div>
+                  <img src="data:image/jpeg;base64,`+ base64Image +`" class="card-img-bottom" alt="...">
+                </div>
+              </div>
+            `;
 
-            // Append the image to the container
-            imagesContainer.appendChild(imgElement);
+            imagesContainer.innerHTML += htmlStr;
           }
         }
       } else {
         console.log("No data available");
       }
     }).catch((error) => {
-      console.error(error);
+      console.log(error);
     });
 
-  
+
   </script>
 
   <!-- Vendor JS Files -->
