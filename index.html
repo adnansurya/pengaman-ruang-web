@@ -72,7 +72,7 @@ S
   <main id="main" class="main">
 
     <div class="pagetitle">
-      <h1>Blank Page</h1>      
+      <h1>Dashboard</h1>      
     </div><!-- End Page Title -->
 
     <section class="section">
@@ -116,9 +116,33 @@ S
 
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
+  <script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-analytics.js";
+    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
+  
+    // Your web app's Firebase configuration
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+    const firebaseConfig = {
+      apiKey: "AIzaSyAhwrvhrkwh4GfnyouBNXi-r2l_G9uZVv0",
+      authDomain: "skripsi-c7455.firebaseapp.com",
+      databaseURL: "https://skripsi-c7455-default-rtdb.asia-southeast1.firebasedatabase.app",
+      projectId: "skripsi-c7455",
+      storageBucket: "skripsi-c7455.firebasestorage.app",
+      messagingSenderId: "310220330876",
+      appId: "1:310220330876:web:8daa18cc57cd2b7dfb36f9",
+      measurementId: "G-41YHJCDFKX"
+    };
+  
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+  </script>
+  
   <!-- Vendor JS Files -->
   <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
 
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
