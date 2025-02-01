@@ -15,7 +15,9 @@
 
   <!-- Google Fonts -->
   <link href="https://fonts.gstatic.com" rel="preconnect">
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+    rel="stylesheet">
 
   <!-- Vendor CSS Files -->
   <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -26,7 +28,7 @@
 
   <!-- Template Main CSS File -->
   <link href="assets/css/style.css" rel="stylesheet">
-S
+  S
 </head>
 
 <body>
@@ -41,7 +43,7 @@ S
       </a>
       <i class="bi bi-list toggle-sidebar-btn"></i>
     </div><!-- End Logo -->
-    
+
 
   </header><!-- End Header -->
 
@@ -55,7 +57,7 @@ S
           <i class="bi bi-grid"></i>
           <span>Dashboard</span>
         </a>
-      </li><!-- End Dashboard Nav -->      
+      </li><!-- End Dashboard Nav -->
 
       <!-- <li class="nav-item">
         <a class="nav-link collapsed" href="pages-blank.html">
@@ -72,18 +74,20 @@ S
   <main id="main" class="main">
 
     <div class="pagetitle">
-      <h1>Dashboard</h1>      
+      <h1>Dashboard</h1>
     </div><!-- End Page Title -->
 
     <section class="section">
+      <div id="images-container"></div>
       <div class="row">
         <div class="col-lg-6">
 
-           <!-- Card with an image on bottom -->
-           <div class="card">
+          <!-- Card with an image on bottom -->
+          <div class="card">
             <div class="card-body">
               <h5 class="card-title">Card with an image on bottom</h5>
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
+                content.</p>
             </div>
             <img src="assets/img/card.jpg" class="card-img-bottom" alt="...">
           </div><!-- End Card with an image on bottom -->
@@ -96,7 +100,8 @@ S
           <div class="card">
             <div class="card-body">
               <h5 class="card-title">Card with an image on bottom</h5>
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
+                content.</p>
             </div>
             <img src="assets/img/card.jpg" class="card-img-bottom" alt="...">
           </div><!-- End Card with an image on bottom -->
@@ -111,18 +116,19 @@ S
   <footer id="footer" class="footer">
     <div class="copyright">
       &copy; Copyright <strong><span>NiceAdmin</span></strong>. All Rights Reserved
-    </div>   
+    </div>
   </footer><!-- End Footer -->
 
-  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
+      class="bi bi-arrow-up-short"></i></a>
 
   <script type="module">
     // Import the functions you need from the SDKs you need
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-app.js";
-    import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-analytics.js";
+    import { getDatabase, ref, get } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-database.js";
     // TODO: Add SDKs for Firebase products that you want to use
     // https://firebase.google.com/docs/web/setup#available-libraries
-  
+
     // Your web app's Firebase configuration
     // For Firebase JS SDK v7.20.0 and later, measurementId is optional
     const firebaseConfig = {
@@ -135,12 +141,48 @@ S
       appId: "1:310220330876:web:8daa18cc57cd2b7dfb36f9",
       measurementId: "G-41YHJCDFKX"
     };
-  
+
     // Initialize Firebase
     const app = initializeApp(firebaseConfig);
-    const analytics = getAnalytics(app);
-  </script>
+    const database = getDatabase(app);
+
+    // Reference to RGB values in Firebase Realtime Database
+    const logsRef = ref(database, 'logs');  // Pastikan ini sesuai dengan direktori di Firebase Anda
+
+    get(logsRef).then((snapshot) => {
+      if (snapshot.exists()) {
+        const logsData = snapshot.val();
+        const imagesContainer = document.getElementById('images-container');
+
+        // Clear the container before adding new images
+        imagesContainer.innerHTML = '';
+
+        // Loop through each log entry
+        for (const idKey in logsData) {
+          if (logsData.hasOwnProperty(idKey)) {
+            const logEntry = logsData[idKey];
+            const base64Image = logEntry.photo;
+
+            // Create an image element and set its source to the base64 string
+            const imgElement = document.createElement('img');
+            imgElement.src = `data:image/jpeg;base64,${base64Image}`;
+            imgElement.alt = `Image ${idKey}`;
+            imgElement.style.width = '200px'; // Adjust the size as needed
+
+            // Append the image to the container
+            imagesContainer.appendChild(imgElement);
+          }
+        }
+      } else {
+        console.log("No data available");
+      }
+    }).catch((error) => {
+      console.error(error);
+    });
+
   
+  </script>
+
   <!-- Vendor JS Files -->
   <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
