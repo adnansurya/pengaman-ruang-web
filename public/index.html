@@ -132,7 +132,10 @@
         imagesContainer.innerHTML = '';
 
         // Loop through each log entry
-        for (const idKey in logsData) {
+        const keys = Object.keys(logsData);
+
+        for (let i = keys.length - 1; i >= 0; i--) {
+          const idKey = keys[i];
           if (logsData.hasOwnProperty(idKey)) {
             const logEntry = logsData[idKey];
             const base64Image = logEntry.photo;
@@ -141,9 +144,9 @@
             const htmlStr = `
                 <div class="col-lg-6">
                 <div class="card">
-                  <img src="data:image/jpeg;base64,`+ base64Image +`" class="card-img-top" alt="...">
+                  <img src="data:image/jpeg;base64,`+ base64Image + `" class="card-img-top" alt="...">
                   <div class="card-body">
-                    <h5 class="card-title">`+ konversiTimestamp(timestamp)+`</h5>                    
+                    <h5 class="card-title">`+ konversiTimestamp(timestamp) + `</h5>                    
                   </div>                 
                 </div>
               </div>
