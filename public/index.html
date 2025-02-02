@@ -94,10 +94,11 @@
       class="bi bi-arrow-up-short"></i></a>
 
   <script src="assets/js/custom.js"></script>
+
   <script type="module">
     // Import the functions you need from the SDKs you need
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-app.js";
-    import { getDatabase, ref, get } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-database.js";
+    import { getDatabase, ref, get, remove, child, update } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-database.js";
     // TODO: Add SDKs for Firebase products that you want to use
     // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -121,6 +122,9 @@
     // Reference to RGB values in Firebase Realtime Database
     const logsRef = ref(database, 'logs');  // Pastikan ini sesuai dengan direktori di Firebase Anda
 
+
+
+
     get(logsRef).then((snapshot) => {
       if (snapshot.exists()) {
         const logsData = snapshot.val();
@@ -143,25 +147,55 @@
 
             const htmlStr = `
                 <div class="col-lg-6">
-                <div class="card">
-                  <img src="data:image/jpeg;base64,`+ base64Image + `" class="card-img-top" alt="...">
-                  <div class="card-body">
-                    <h5 class="card-title">`+ konversiTimestamp(timestamp) + `</h5>                    
-                  </div>                 
+                  <div class="card">
+                    <img src="data:image/jpeg;base64,`+ base64Image + `" class="card-img-top" alt="...">
+                    <div class="card-body">
+                      <h5 class="card-title">`+ konversiTimestamp(timestamp) + `</h5>
+                      <button class="btn btn-danger delete-btn btn-sm" id="`+ idKey + `">
+                        <i class="ri-delete-bin-line"></i> Hapus
+                      </button>                     
+                    </div>                 
+                  </div>
                 </div>
-              </div>
             `;
 
             imagesContainer.innerHTML += htmlStr;
           }
         }
+
+        document.querySelectorAll('.delete-btn').forEach((button) => {
+          button.addEventListener('click', function () {
+            const idToDelete = this.id;
+            const logRef = ref(database, 'logs/' + idToDelete);
+
+            if (confirm("Apakah Anda yakin ingin menghapus data ini?")) {
+              remove(logRef)
+                .then(() => {
+                  alert("Data berhasil dihapus!");
+                  location.reload(); // Refresh halaman agar daftar diperbarui
+                })
+                .catch((error) => {
+                  alert("Gagal menghapus data: " + error.message);
+                });
+            }
+          });
+        });
       } else {
         console.log("No data available");
       }
+
+
     }).catch((error) => {
       console.log(error);
     });
 
+
+
+
+
+  </script>
+
+  <script>
 
   </script>
 
