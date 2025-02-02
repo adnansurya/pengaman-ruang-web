@@ -170,8 +170,7 @@
 
             if (confirm("Apakah Anda yakin ingin menghapus data ini?")) {
               remove(logRef)
-                .then(() => {
-                  alert("Data berhasil dihapus!");
+                .then(() => {                 
                   location.reload(); // Refresh halaman agar daftar diperbarui
                 })
                 .catch((error) => {
