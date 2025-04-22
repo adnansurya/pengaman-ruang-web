@@ -98,7 +98,7 @@
   <script type="module">
     // Import the functions you need from the SDKs you need
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-app.js";
-    import { getDatabase, ref, get, remove, child, update } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-database.js";
+    import { getDatabase, ref, get, remove, child, update, query, orderByChild, limitToLast } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-database.js";
     // TODO: Add SDKs for Firebase products that you want to use
     // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -122,10 +122,12 @@
     // Reference to RGB values in Firebase Realtime Database
     const logsRef = ref(database, 'logs');  // Pastikan ini sesuai dengan direktori di Firebase Anda
 
+    const latestLogsQuery = query(logsRef, orderByChild('timestamp'), limitToLast(20));
 
 
 
-    get(logsRef).then((snapshot) => {
+
+    get(latestLogsQuery).then((snapshot) => {
       if (snapshot.exists()) {
         const logsData = snapshot.val();
 
