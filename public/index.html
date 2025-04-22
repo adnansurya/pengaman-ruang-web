@@ -73,7 +73,7 @@
 
   <main id="main" class="main">
 
-    <div class="pagetitle">
+    <div class="pagetitle mb-3">
       <h1>Dashboard</h1>
     </div><!-- End Page Title -->
 
@@ -145,14 +145,15 @@
           if (logsData.hasOwnProperty(idKey)) {
             const logEntry = logsData[idKey];
             const base64Image = logEntry.photo;
-            const timestamp = logEntry.timestamp;
+            const timestamp = logEntry.timestamp
+            const datetime = logEntry.datetime;
 
             const htmlStr = `
                 <div class="col-lg-6">
                   <div class="card">
-                    <img src="data:image/jpeg;base64,`+ base64Image + `" class="card-img-top" alt="...">
+                    <img src="data:image/jpeg;base64,`+ base64Image + `" class="card-img-top" alt="`+timestamp+`">
                     <div class="card-body">
-                      <h5 class="card-title">`+ konversiTimestamp(timestamp) + `</h5>
+                      <h5 class="card-title">`+ datetime + `</h5>
                       <button class="btn btn-danger delete-btn btn-sm" id="`+ idKey + `">
                         <i class="ri-delete-bin-line"></i> Hapus
                       </button>                     
